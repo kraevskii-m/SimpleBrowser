@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -38,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
         webView.setBackgroundColor(Color.WHITE);
         webView.loadUrl("http://yandex.ru");
         webView.setWebViewClient(new WebViewClient(){
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url != null && url.startsWith("http://")) {
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (request != null && request.getUrl().toString().startsWith("http://")) {
                     view.getContext().startActivity(
-                            new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                            new Intent(Intent.ACTION_VIEW, request.getUrl()));
                     return true;
                 } else {
                     return false;
